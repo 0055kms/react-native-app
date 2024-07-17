@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import { StatusBar } from 'react-native';
@@ -8,7 +8,7 @@ const Container = styled.SafeAreaView`
     flex: 1;
     background-color: ${({ theme }) => theme.background};
     align-items: center;
-    justify-content: flew-start;
+    justify-content: flex-start;
 `;
 
 const Title = styled.Text`
@@ -20,6 +20,18 @@ const Title = styled.Text`
     `
 
 export default function App() {
+
+    const [newTask ,setNewTask] = useState('');
+
+    const _addTask = () => {
+        alert(`Add: ${newTask}`);
+        setNewTask('');
+    }
+
+    const _handleTextChange = text => {
+        setNewTask(text);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -27,8 +39,13 @@ export default function App() {
                     barStyle = "light-content"
                     backgroundColor = {theme.background}
                 />
-                <Input />
                 <Title>TODO List</Title>
+                <Input
+                    placeholder="+입력하세요"
+                    value = {newTask}
+                    onChangeText = {_handleTextChange}
+                    onSubmiEditing={_addTask}
+                />
             </Container>
         </ThemeProvider>
     );
